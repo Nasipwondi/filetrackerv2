@@ -73,7 +73,7 @@ router.post("/edit/:id", checkNotAuthenticated, (req, res) => {
   const { name, directorate } = req.body;
 
   pool.query(
-    "UPDATE departments SET name = $1, directorate = $2, WHERE id = $3",
+    "UPDATE departments SET name = $1, directorate = $2 WHERE id = $3",
     [name, directorate, id],
     (err) => {
       if (err) {
