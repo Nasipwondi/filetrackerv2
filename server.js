@@ -16,6 +16,7 @@ initializePassport(passport);
 
 // Routes
 const fileRoutes = require("./routes/files");
+const directorateRoutes = require("./routes/directorates");
 const departmentRoutes = require("./routes/departments");
 const staffRoutes = require("./routes/staff");
 
@@ -44,6 +45,7 @@ app.use(flash());
 app.get("/", (req, res) => res.render("index"));
 
 app.use("/files", fileRoutes);
+app.use("/directorates", directorateRoutes);
 app.use("/departments", departmentRoutes);
 app.use("/staff", staffRoutes);
 

@@ -5,37 +5,46 @@ const { checkNotAuthenticated } = require("../middleware/auth"); // optional
 
 // Get all files
 router.get("/", checkNotAuthenticated, (req, res) => {
-  pool.query("SELECT * FROM staff", (err, results) => {
+
+    pool.query("SELECT current_database()", (err, result) => {
+    if (err) {
+      console.error("DB check failed:", err);
+    } else {
+      console.log("✅ Connected to database:", result.rows[0].current_database);
+    }
+  });
+
+  pool.query("SELECT * FROM directorates", (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).send("Database error");
     }
-    res.render("staff", { staff: results.rows });
+    res.render("directorates", { directorates: results.rows });
   });
 });
 
 // Add new file form
 router.get("/add", checkNotAuthenticated, (req, res) => {
-  res.render("staff/add", {
+  res.render("directorates/add", {
     layout: "layout",
-    title: "Add New Staff",
+    title: "Add New Directorate",
     css: "/css/filesadd.css",
   });
 });
 
 // Add new file action
 router.post("/add", checkNotAuthenticated, (req, res) => {
-  const { name, department, directorate, designation, role } = req.body;
+  const { name } = req.body;
 
   pool.query(
-    "INSERT INTO staff (name, department, directorate, designation, role) VALUES ($1, $2, $3, $4, $5)",
-    [name, department, directorate, designation, role],
+    "INSERT INTO directorates (name) VALUES ($1)",
+    [name],
     (err) => {
       if (err) {
         console.log(err);
-        return res.status(500).send("Failed to add file.");
+        return res.status(500).send("Failed to add directorate.");
       }
-      res.redirect("/staff");
+      res.redirect("/directorates");
     }
   );
 });
@@ -43,16 +52,16 @@ router.post("/add", checkNotAuthenticated, (req, res) => {
 // Edit file form
 router.get("/edit/:id", checkNotAuthenticated, (req, res) => {
   const { id } = req.params;
-  pool.query("SELECT * FROM staff WHERE id = $1", [id], (err, results) => {
+  pool.query("SELECT * FROM directorates WHERE id = $1", [id], (err, results) => {
     if (err || results.rows.length === 0) {
       console.log(err);
-      return res.status(404).send("Staff not found");
+      return res.status(404).send("Directorate not found");
     }
 
-    res.render("staff/edit", {
-      staff: results.rows[0],
+    res.render("directorates/edit", {
+      directorate: results.rows[0],
       layout: "layout",
-      title: "Update Staff",
+      title: "Update Directorate",
       css: "/css/filesedit.css",
     });
   });
@@ -61,16 +70,16 @@ router.get("/edit/:id", checkNotAuthenticated, (req, res) => {
 // Update file
 router.post("/edit/:id", checkNotAuthenticated, (req, res) => {
   const { id } = req.params;
-  const { name, department, directorate, designation, role } = req.body;
+  const { name} = req.body;
 
   pool.query(
-    "UPDATE staff SET name = $1, department = $2, directorate = $3, designation = $4, role = $5 WHERE id = $6",
-    [name, department, directorate, designation, role, id],
+    "UPDATE directorates SET name = $1 WHERE id = $2",
+    [name, id],
     (err) => {
       if (err) {
         console.log(err);
       }
-      res.redirect("/staff");
+      res.redirect("/directorates");
     }
   );
 });
@@ -78,11 +87,11 @@ router.post("/edit/:id", checkNotAuthenticated, (req, res) => {
 // Delete file
 router.get("/delete/:id", checkNotAuthenticated, (req, res) => {
   const { id } = req.params;
-  pool.query("DELETE FROM staff WHERE id = $1", [id], (err) => {
+  pool.query("DELETE FROM directorates WHERE id = $1", [id], (err) => {
     if (err) {
       console.log(err);
     }
-    res.redirect("/staff");
+    res.redirect("/directorates");
   });
 });
 

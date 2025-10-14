@@ -1,0 +1,29 @@
+<section>
+
+    <div class="content">
+      <div class="container">
+<h2>Directorates</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th><br></br> 
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% directorates.forEach(directorate => { %>
+      <tr>
+        <td><%= directorate.name %></td>
+        <td>
+          <a href="/directorates/edit/<%= directorate.id %>">Edit</a> | 
+          <a href="/directorates/delete/<%= directorate.id %>">Delete</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<br></br>
+<a href="/directorates/add" class="button-link">Add New Department</a>
+</div>
+</div>
+</section>

@@ -1,0 +1,18 @@
+<section>
+  <div class="content">
+    <div class="container">
+      <h2>Update Directorate</h2>
+
+      <form action="/directorates/edit/<%= directorate.id %>" method="POST" class="directorate-form">
+        <div class="form-group">
+          <label for="name">Directorate Name</label>
+          <input type="text" id="name" name="name" value="<%= directorate.name %>" required>
+        </div>
+
+        <div class="button-group">
+    <button type="submit" class="button-link">Update Directorate</button>
+    <a href="/directorates" class="button-link">Cancel</a>
+      </form>
+    </div>
+  </div>
+</section>
