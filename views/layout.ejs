@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= typeof title !== 'undefined' ? title : 'Dashboard' %></title>
+
+  <!-- Dynamic CSS link -->
+  <% if (typeof css !== 'undefined') { %>
+    <link rel="stylesheet" href="<%= css %>">
+  <% } else { %>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- default fallback -->
+  <% } %>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('sidebar') %>
+    
+    <main class="main-content">
+      <%- body %>
+    </main>
+  </div>
+</body>
+</html>

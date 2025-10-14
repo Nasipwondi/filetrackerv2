@@ -1,0 +1,31 @@
+<section>
+
+    <div class="content">
+      <div class="container">
+<h2>Departments</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Department Name</th><br></br> 
+      <th>Directorate</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% departments.forEach(department => { %>
+      <tr>
+        <td><%= department.name %></td>
+        <td><%= department.directorate %></td>
+        <td>
+          <a href="/departments/edit/<%= department.id %>">Edit</a> | 
+          <a href="/departments/delete/<%= department.id %>">Delete</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<br></br>
+<a href="/departments/add" class="button-link">Add New Department</a>
+</div>
+</div>
+</section>

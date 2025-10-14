@@ -1,0 +1,33 @@
+<section>
+  <div class="content">
+    <div class="container">
+      <h2>Update File</h2>
+
+      <form action="/files/edit/<%= file.id %>" method="POST" class="file-form">
+        <div class="form-group">
+          <label for="name">File Name</label>
+          <input type="text" id="name" name="name" value="<%= file.name %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" name="department" value="<%= file.department %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="directorate">Directorate</label>
+          <input type="text" id="directorate" name="directorate" value="<%= file.directorate %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fileno">File Number</label>
+          <input type="text" id="fileno" name="fileno" value="<%= file.fileno %>" required>
+        </div>
+
+        <div class="button-group">
+    <button type="submit" class="button-link">Update File</button>
+    <a href="/files" class="button-link">Cancel</a>
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<section>
+
+    <div class="content">
+      <div class="container">
+<h2>Files</h2>
+<table>
+  <thead>
+    <tr>
+      <th>File Name</th><br></br>
+      <th>Department</th>
+      <th>Directorate</th>
+      <th>File Number</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% files.forEach(file => { %>
+      <tr>
+        <td><%= file.name %></td>
+        <td><%= file.department %></td>
+        <td><%= file.directorate %></td>
+        <td><%= file.fileno %></td>
+        <td>
+          <a href="/files/edit/<%= file.id %>">Edit</a> | 
+          <a href="/files/delete/<%= file.id %>">Delete</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<br></br>
+<a href="/files/add" class="button-link">Add New File</a>
+</div>
+</div>
+</section>
