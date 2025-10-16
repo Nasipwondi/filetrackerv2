@@ -1,15 +1,51 @@
+
+
 <aside>
- 
-  <nav><br></br>
-    <div class="sidebar">
-     <h3>Dashboard</h3><br></br>
-    <ul>
-      <li><a href="/files">Files</a></li>
-      <li><a href="/directorates">Directorates</a></li>
-      <li><a href="/departments">Departments</a></li>
-      <li><a href="/staff">Staff</a></li>
-      <li><a href="/file-history">File History</a></li>
-    </ul>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   <div class="sidebar">
+    <div class="logo">
+      <span class="logo-icon">🌊</span>
     </div>
-  </nav>
-</aside>
+    <nav class="menu">
+      <a href="/dashboard" class="menu-item active">
+        <span class="icon"><i class="fas fa-home"></i></span>
+        Dashboard
+        
+      </a>
+      <a href="/directorates" class="menu-item">
+        <span class="icon">🏢</span>
+        Directorates
+        
+      </a>
+      <a href="/departments" class="menu-item">
+        <span class="icon">📂</span>
+        Departments
+        
+      </a>     
+      <a href="/staff" class="menu-item">
+        <span class="icon">👥</span>
+        Staff
+        
+      </a>
+      <a href="/files" class="menu-item">
+        <span class="icon">📂</span>
+        Files
+        
+      </a>
+      <a href="/files" class="menu-item">
+        <span class="icon">🕓</span>
+        History
+      </a>
+    </nav>
+    <div class="logout">
+      <% if (user) { %>
+        <h4>Hello, <%= user.name %>!</h4>
+        <a class="logout-btn" href="/users/logout">Logout</a>
+      <% } else { %>
+        <h4>Hello, Guest!</h4>
+        <a class="logout-btn" href="/users/login">Login</a>
+      <% } %>
+    </div>
+    </div>
+  </aside>
+

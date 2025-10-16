@@ -3,17 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-    />
+     rel="stylesheet" href="/css/login.css">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Login</title>
   </head>
   <body>
-    <h1>Login</h1>
     
-    <<ul>
+    <ul>
   <% if (messages.success_msg && messages.success_msg.length > 0) { %>
     <% messages.success_msg.forEach(msg => { %>
       <li style="color: green;"><%= msg %></li>
@@ -28,8 +26,16 @@
   <% }) %>
 <% } %>
     </ul>
+    
+    
+  <div class="left-side">
+    <img src="/images/bg3.jpg" alt="Login Image" />
+  </div>
 
+  <div class="right-side">
+    
     <form action="/users/login" method="POST">
+      <h1 class="form-title">LOGIN</h1>
       <div>
         <input
           type="email"
@@ -54,5 +60,7 @@
 
       <a href="/users/register">Register</a>
     </form>
+  
+  </div>
   </body>
 </html>

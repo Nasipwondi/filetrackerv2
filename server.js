@@ -41,8 +41,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
 // Routes
 app.get("/", (req, res) => res.render("index"));
+
 
 app.use("/files", fileRoutes);
 app.use("/directorates", directorateRoutes);
@@ -71,7 +77,7 @@ app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
 app.get("/users/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.render("index", { message: "You have logged out successfully" });
+    res.render("login", { message: "You have logged out successfully" });
   });
 });
 

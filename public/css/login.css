@@ -1,0 +1,105 @@
+
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #6edf93, #2fe365, #13e85a );
+  height: 100%;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 600px;
+  background: linear-gradient(to right, #39b34b, #88b896, #39b34b );
+}
+
+
+.main-content {
+  max-width: 1000px;
+  height: 500px;
+  display: flex; /* 👈 enable horizontal layout */
+  align-items: center;
+  padding: 0; /* remove internal padding so child divs can size evenly */
+  margin-top: 50px;
+  margin-left: 130px;
+  background: #fff;
+  box-shadow: 0 8px 40px 8px rgba(0, 0, 0, 0.2); /* optional for visual appeal */
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Left side (image) */
+.left-side {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  box-shadow: 0 8px 40px 8px rgba(71, 86, 74, 0.2);
+}
+
+.left-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right side (form) */
+.right-side {
+  width: 50%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #01320e;
+  font-weight: bold;
+}
+
+.right-side form {
+  width: 100%;
+  max-width: 300px;
+}
+
+.right-side input[type="email"],
+.right-side input[type="password"],
+.right-side input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.right-side input[type="submit"] {
+  background-color: #069736; /* Bootstrap green */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.right-side input[type="submit"]:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.right-side a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #01320e;
+  text-decoration: none;
+}
+    .sidebar {
+  display: none !important;
+}
+    
