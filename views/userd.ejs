@@ -1,0 +1,46 @@
+
+    <section>
+   <div class="content">
+      <div class="container">
+        <h2>Send a file</h2>
+      <table>
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Sender</th>
+        <th>Recipient</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (send && send.length > 0) { %>
+        <% send.forEach(send => { %>
+          <tr>
+            <td><%= send.name %></td>
+            <td><%= send.sender_id %></td>
+            <td><%= send.recipient_id %></td>
+            <td><%= send.date %></td>
+            <td><%= send.status %></td>
+            <td><%= send.note %></td>
+            <td>
+          <a href="/userd/edit/<%= send.id %>">Edit</a> | 
+          <a href="/userd/delete/<%= send.id %>">Delete</a>
+        </td>
+
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="6">No files found.</td>
+        </tr>
+      <% } %>
+      
+    </tbody>
+  </table>
+  <br></br>
+<a href="/userd/send" class="button-link">Send File</a>
+ </div>
+  </div>
+</section>

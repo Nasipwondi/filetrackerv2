@@ -24,7 +24,7 @@ body {
 }
 
 /* Sidebar container */
-.sidebar {
+.sidebar2 {
   width: 250px;
   height: 600px;
   background-color: #0f172a;
@@ -107,91 +107,66 @@ body {
   padding: 50px;
   background-color: #96f1a4;
 }
-.container h2 {
-  text-align: center;
-  color: #025316;
-  margin-bottom: 30px;
-}
-
-/* Form Styling */
-.file-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.department-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.staff-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.directorate-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Group Labels and Inputs */
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 8px;
-  font-weight: bold;
+/* Form title */
+.userd h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
   color: #333;
 }
 
-.form-group input {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* Form element styling */
+.userd form {
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group input:focus {
+/* Label styling */
+.userd label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #025316;
+}
+
+/* Input styling */
+.userd input[type="text"] {
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #025316;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+.userd input[type="text"]:focus {
   border-color: #1ea740;
-  box-shadow: 0 0 5px rgba(30, 167, 64, 0.3);
   outline: none;
 }
 
-/* Button Style (shared with link buttons) */
-/* Button Group - flex container */
-.button-group {
-  display: flex;
-  justify-content: flex-start;
-  gap: 15px;
-}
-
-/* Button Style (shared with link buttons) */
-.button-link {
-  display: inline-block;
-  padding: 10px 20px;
+/* Submit button styling */
+.userd button[type="submit"] {
+  margin-top: 25px;
+  padding: 12px;
+  font-size: 16px;
   background-color: #025316;
-  color: #fff;
-  text-decoration: none;
+  color: #ffffff;
   border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
-.button-link:hover {
+.userd button[type="submit"]:hover {
   background-color: #025316;
-  transform: translateY(-1px);
 }
 
-/* Optional: Space between buttons */
-.button-link + .button-link {
-  margin-left: 80px;
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .userd h2 {
+    font-size: 20px;
+  }
+
+  .userd input[type="text"],
+  .userd button[type="submit"] {
+    font-size: 14px;
+  }
 }

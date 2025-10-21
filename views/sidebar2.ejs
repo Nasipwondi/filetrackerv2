@@ -1,29 +1,17 @@
 
 
 <aside>
-   <div class="sidebar">
+   <div class="sidebar2">
     
     <nav class="menu">
-      <a href="/dashboard" class="menu-item active">
-        <span class="icon"><i class="fas fa-home"></i></span>
-        Dashboard
-        
-      </a>
-      <a href="/directorates" class="menu-item">
-        <span class="icon">🏢</span>
-        Directorates
-        
-      </a>
-      <a href="/departments" class="menu-item">
+      <h3>User Dashboard</h3>
+      
+      <a href="/userd" class="menu-item">
         <span class="icon">📂</span>
-        Departments
+        Send Files
         
       </a>     
-      <a href="/staff" class="menu-item">
-        <span class="icon">👥</span>
-        Staff
-        
-      </a>
+      
       <a href="/files" class="menu-item">
         <span class="icon">📂</span>
         Files
@@ -31,13 +19,14 @@
       </a>
       <a href="/files" class="menu-item">
         <span class="icon">🕓</span>
-        History
+        File History
       </a>
     </nav>
     <div class="logout">
       <% if (user) { %>
         <h4>Hello, <%= user.name %>!</h4>
-        <p><%= user.role %></p>
+         <p><h4><span class="icon"><i class="fas fa-user"></i></span>
+      <%= user.role %></h4></p>
        <a class="logout-btn" href="/users/logout">Logout</a>
       <% } else { %>
         <h4>Hello, Guest!</h4>
@@ -46,4 +35,3 @@
     </div>
     </div>
   </aside>
-

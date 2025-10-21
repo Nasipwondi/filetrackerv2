@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../dbConfig");
 const { checkNotAuthenticated } = require("../middleware/auth"); // optional
+const { checkRole } = require('../middleware/roles');
+
+router.get("/super_admin-only", checkRole('super_admin'), (req, res) => {
+  res.send("Welcome, Super Admin");
+});
 
 // Get all files
 router.get("/", checkNotAuthenticated, (req, res) => {

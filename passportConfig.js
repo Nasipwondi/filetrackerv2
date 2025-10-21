@@ -12,6 +12,8 @@ function initialize(passport) {
       `SELECT * FROM users WHERE email = $1`,
       [email],
       (err, results) => {
+        const user = results.rows[0];
+    // user.role will now be available
         if (err) {
           return done(err);
         }

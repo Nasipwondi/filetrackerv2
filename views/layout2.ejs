@@ -1,3 +1,5 @@
+
+<!-- THIS IS LAYOUT 2 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +11,13 @@
   <% if (typeof css !== 'undefined') { %>
     <link rel="stylesheet" href="<%= css %>">
   <% } else { %>
-    <link rel="stylesheet" href="/css/styles.css"> <!-- default fallback -->
+    <link rel="stylesheet" href="/css/userd.css"> <!-- default fallback -->
   <% } %>
 </head>
+
 <body>
   <div class="dashboard-container">
-    <%- include('sidebar') %>
+    <%- include('sidebar2') %>
     
     <div class="main-content">
       <%- body %>

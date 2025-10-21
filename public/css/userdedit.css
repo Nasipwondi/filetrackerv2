@@ -136,6 +136,11 @@ body {
   flex-direction: column;
   gap: 20px;
 }
+.send-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 /* Group Labels and Inputs */
 .form-group {

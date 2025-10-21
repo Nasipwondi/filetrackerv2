@@ -1,3 +1,4 @@
+/* layout2 */
 * {
   margin: 0;
   padding: 0;
@@ -23,8 +24,8 @@ body {
   
 }
 
-/* Sidebar container */
-.sidebar {
+/* Sidebar2 container */
+.sidebar2 {
   width: 250px;
   height: 600px;
   background-color: #0f172a;
@@ -36,6 +37,11 @@ body {
 
 .menu {
   flex-grow: 1;
+}
+.menu h3 {
+  color: #f8f9f8;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .menu-item {
@@ -59,23 +65,9 @@ body {
   background-color: #1e293b;
 }
 
-.menu-item.active {
-  background-color: #1e293b;
-  color: white;
-  font-weight: 600;
-}
-
-.badge {
-  background-color: #334155;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  margin-left: auto;
-  color: #e2e8f0;
-}
 
 .logout {
-  margin-top: auto; /* Push this div to the bottom */
+  margin-top: 50px; /* Push this div to the bottom */
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
@@ -83,11 +75,13 @@ body {
 
 .logout h4 {
   margin: 0 0 10px;
+  padding-bottom: 30px;
 }
 
 .logout-btn {
   display: inline-block;
   padding: 8px 12px;
+  margin-bottom: 30px;
   background-color: #ff4d4f;
   color: white;
   text-decoration: none;
@@ -199,4 +193,3 @@ body {
     font-size: 18px;
   }
 }
-

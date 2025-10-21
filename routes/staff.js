@@ -25,11 +25,11 @@ router.get("/add", checkNotAuthenticated, (req, res) => {
 
 // Add new file action
 router.post("/add", checkNotAuthenticated, (req, res) => {
-  const { name, department, directorate, designation, role } = req.body;
+  const { name, department, directorate, designation } = req.body;
 
   pool.query(
-    "INSERT INTO staff (name, department, directorate, designation, role) VALUES ($1, $2, $3, $4, $5)",
-    [name, department, directorate, designation, role],
+    "INSERT INTO staff (name, department, directorate, designation ) VALUES ($1, $2, $3, $4 )",
+    [name, department, directorate, designation],
     (err) => {
       if (err) {
         console.log(err);
@@ -61,11 +61,11 @@ router.get("/edit/:id", checkNotAuthenticated, (req, res) => {
 // Update file
 router.post("/edit/:id", checkNotAuthenticated, (req, res) => {
   const { id } = req.params;
-  const { name, department, directorate, designation, role } = req.body;
+  const { name, department, directorate, designation } = req.body;
 
   pool.query(
-    "UPDATE staff SET name = $1, department = $2, directorate = $3, designation = $4, role = $5 WHERE id = $6",
-    [name, department, directorate, designation, role, id],
+    "UPDATE staff SET name = $1, department = $2, directorate = $3, designation = $4, WHERE id = $5",
+    [name, department, directorate, designation, id],
     (err) => {
       if (err) {
         console.log(err);

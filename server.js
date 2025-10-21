@@ -9,6 +9,7 @@ const app = express();
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 const { checkAuthenticated, checkNotAuthenticated } = require("./middleware/auth");
+const sendRoutes = require("./routes/userd");
 
 const PORT = process.env.PORT || 4000;
 const initializePassport = require("./passportConfig");
@@ -19,6 +20,7 @@ const fileRoutes = require("./routes/files");
 const directorateRoutes = require("./routes/directorates");
 const departmentRoutes = require("./routes/departments");
 const staffRoutes = require("./routes/staff");
+const userdRoutes = require("./routes/userd");
 
 // View Engine
 app.set("view engine", "ejs");
@@ -54,6 +56,7 @@ app.use("/files", fileRoutes);
 app.use("/directorates", directorateRoutes);
 app.use("/departments", departmentRoutes);
 app.use("/staff", staffRoutes);
+app.use("/userd", sendRoutes);
 
 // Authentication Routes
 app.get("/users/register", checkAuthenticated, (req, res) => {
@@ -71,7 +74,35 @@ app.get("/users/login", checkAuthenticated, (req, res) => {
 });
 
 app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
-  res.render("dashboard", { user: req.user.name });
+  res.render("dashboard", { user: req.user });
+});
+
+app.get("/users/admin", checkNotAuthenticated, (req, res) => {
+  res.render("admin", { user: req.user });
+});
+
+app.get("/users/user", checkNotAuthenticated, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM send WHERE id = $1",
+      [req.user.id] // Adjust this depending on your schema
+    );
+
+    res.render("userd", {
+       layout: "layout2",
+      title: "User Dashboard",
+      css: "/css/userd.css",
+      user: req.user,
+      send: rows // <- This is what your EJS expects
+    });
+  } catch (err) {
+    console.error(err);
+    res.render("userd", {
+      user: req.user,
+      send: [],
+      error: "Failed to load files"
+    });
+  }
 });
 
 app.get("/users/logout", (req, res, next) => {
@@ -109,27 +140,42 @@ app.post("/users/register", async (req, res) => {
         message: "Email already registered",
       });
     } else {
-      pool.query(
-        "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
-        [name, email, hashedPassword],
-        (err) => {
-          if (err) throw err;
-          req.flash("success_msg", "You are now registered. Please log in");
-          res.redirect("/users/login");
-        }
-      );
+      const role = 'user'; // or logic to assign role based on email
+
+pool.query(
+  "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)",
+  [name, email, hashedPassword, role],
+  (err) => {
+    if (err) throw err;
+    req.flash("success_msg", "You are now registered. Please log in");
+    res.redirect("/users/login");
+  }
+);
     }
   });
 });
 
-app.post(
-  "/users/login",
-  passport.authenticate("local", {
-    successRedirect: "/users/dashboard",
-    failureRedirect: "/users/login",
-    failureFlash: true,
-  })
-);
+app.post("/users/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect("/users/login");
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+
+      // Redirect based on role
+      const role = user.role.toLowerCase().replace(/\s+/g, '_');
+
+      if (role === 'super_admin') {
+        return res.redirect("/users/dashboard");
+      } else if (role === 'admin') {
+        return res.redirect("/users/admin");
+      } else {
+        return res.redirect("/users/user");
+      }
+    });
+  })(req, res, next);
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
