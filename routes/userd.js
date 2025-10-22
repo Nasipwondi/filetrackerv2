@@ -3,94 +3,75 @@ const router = express.Router();
 const { pool } = require("../dbConfig");
 const { checkNotAuthenticated } = require("../middleware/auth"); // optional
 
+
 // Get all files
-router.get("/", checkNotAuthenticated, (req, res) => {
-  pool.query("SELECT * FROM send", (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Database error");
-    }
+router.get("/", checkNotAuthenticated, async (req, res) => {
+  try {
+    const results = await pool.query(`
+      SELECT 
+        s.id,
+        f.name,
+        st1.name AS sender_name,
+        st2.name AS recipient_name,
+        s.sent_at,
+        s.received_at,
+        s.status,
+        s.note
+      FROM send s
+      JOIN files f ON s.file_id = f.id
+      JOIN staff st1 ON s.sender_id = st1.id
+      JOIN staff st2 ON s.recipient_id = st2.id
+      ORDER BY s.sent_at DESC
+    `);
 
     res.render("userd", {
-      layout: "layout2", // ✅ forces layout2.ejs
+      layout: "layout2",
       title: "User Dashboard",
       css: "/css/userd.css",
       user: req.user,
       send: results.rows
     });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Database error");
+  }
 });
 
-// Add new file form
-router.get("/send", checkNotAuthenticated, (req, res) => {
-  res.render("userd/send", {
-    layout: "layout2",
-    title: "Send a New File",
-    css: "/css/userdsend.css",
-  });
-});
+// GET: Form to send file
+router.get("/send", checkNotAuthenticated, async (req, res) => {
+  try {
+    const files = await pool.query("SELECT * FROM files");
+    const staff = await pool.query("SELECT * FROM staff");
 
-// Add new file action
-router.post("/send", checkNotAuthenticated, (req, res) => {
-  const { file_id, sender_id, recipient_id, date, status, note } = req.body;
-
-  pool.query(
-    "INSERT INTO send (file_id, sender_id, recipient_id, date, status, note) VALUES ($1, $2, $3, $4, $5, $6)",
-    [file_id, sender_id, recipient_id, date, status, note],
-    (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send("Unable to send file.");
-      }
-      res.redirect("/userd");
-    }
-  );
-});
-
-// Edit file form
-router.get("/edit/:id", checkNotAuthenticated, (req, res) => {
-  const { id } = req.params;
-  pool.query("SELECT * FROM send WHERE id = $1", [id], (err, results) => {
-    if (err || results.rows.length === 0) {
-      console.log(err);
-      return res.status(404).send("File not found");
-    }
-
-    res.render("send/edit", {
-      file: results.rows[0],
+    res.render("userd/send", {
       layout: "layout2",
-      title: "Update File",
-      css: "/css/userdedit.css",
+      title: "Send File",
+      css: "/css/userdsend.css",
+      files: files.rows,
+      staff: staff.rows
     });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Form error");
+  }
 });
 
-// Update file
-router.post("/edit/:id", checkNotAuthenticated, (req, res) => {
-  const { id } = req.params;
-  const { file_id, sender_id, recipient_id, date, status, note } = req.body;
+// POST: Handle send file form
+router.post("/send", checkNotAuthenticated, async (req, res) => {
+  const { file_id, sender_id, recipient_id, sent_at, received_at, note } = req.body;
+  const status = 'Sent';
+  try {
+    await pool.query(
+      `INSERT INTO send (file_id, sender_id, recipient_id, sent_at, received_at, status, note)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [file_id, sender_id, recipient_id, sent_at || new Date(), received_at || null, status, note]
+    );
 
-  pool.query(
-    "UPDATE send SET file_id = $1, sender_id = $2, recipient_id = $3, date = $4, status = $5, note = $6 WHERE id = $7",
-    [file_id, sender_id, recipient_id, date, status, note, id],
-    (err) => {
-      if (err) {
-        console.log(err);
-      }
-      res.redirect("/userd");
-    }
-  );
-});
-
-// Delete file
-router.get("/delete/:id", checkNotAuthenticated, (req, res) => {
-  const { id } = req.params;
-  pool.query("DELETE FROM send WHERE id = $1", [id], (err) => {
-    if (err) {
-      console.log(err);
-    }
     res.redirect("/userd");
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Unable to send file");
+  }
 });
 
 module.exports = router;

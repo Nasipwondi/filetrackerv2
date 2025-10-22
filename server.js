@@ -171,7 +171,7 @@ app.post("/users/login", (req, res, next) => {
       } else if (role === 'admin') {
         return res.redirect("/users/admin");
       } else {
-        return res.redirect("/users/user");
+        return res.redirect("/userd");
       }
     });
   })(req, res, next);

@@ -34,10 +34,11 @@
         History
       </a>
     </nav>
-    <div class="logout">
+   <div class="logout">
       <% if (user) { %>
         <h4>Hello, <%= user.name %>!</h4>
-        <p><%= user.role %></p>
+         <p><h4><span class="icon"><i class="fas fa-user"></i></span>
+      <%= user.role %></h4></p>
        <a class="logout-btn" href="/users/logout">Logout</a>
       <% } else { %>
         <h4>Hello, Guest!</h4>

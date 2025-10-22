@@ -1,28 +1,62 @@
 <section>
   <div class="content">
       <div class="userd">
-<h2>Add New File</h2>
-<form action="/userd/send" method="POST">
-  <label>File Name:</label>
-  <input type="text" name="file_id" required>
-  
-  <label>Sender:</label>
-  <input type="text" name="sender_id" required>
-  
-  <label>Recipient:</label>
-  <input type="text" name="recipient" required>
-  
-  <label>Date:</label>
-  <input type="text" name="date" required>
+<h1>Send File</h1><br></br>
+<form action="/userd/send" method="POST" class="form-grid">
 
-  <label>Status:</label>
-  <input type="text" name="status" required>
-  
-  <label>Comment:</label>
-  <input type="text" name="note" required>
+  <!-- Row 1 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="file_id">File</label>
+      <select name="file_id" required>
+        <% files.forEach(file => { %>
+          <option value="<%= file.id %>"><%= file.name %></option>
+        <% }) %>
+      </select>
+    </div>
 
+    <div class="form-group">
+      <label for="sender_id">Sender</label>
+      <select name="sender_id" required>
+        <% staff.forEach(staff => { %>
+          <option value="<%= staff.id %>"><%= staff.name %></option>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="recipient_id">Recipient</label>
+      <select name="recipient_id" required>
+        <% staff.forEach(staff => { %>
+          <option value="<%= staff.id %>"><%= staff.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="sent_at">Sent At</label>
+      <input type="datetime-local" name="sent_at">
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="received_at">Received At</label>
+      <input type="datetime-local" name="received_at">
+    </div>
+
+    <div class="form-group">
+      <label for="note">Comment</label>
+      <textarea name="note" rows="4"></textarea>
+    </div>
+  </div>
+
+  <div class="userd-actions">
   <button type="submit">Send File</button>
-  </form>
-  </div>
-  </div>
+  <a href="/userd">Back to Dashboard</a>
+</div>
 </section>
