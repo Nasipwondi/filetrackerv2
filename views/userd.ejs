@@ -10,7 +10,6 @@
         <th>Sender</th>
         <th>Recipient</th>
         <th>Sent At</th>
-        <th>Received At</th>
         <th>Status</th>
         <th>Comment</th>
       </tr>
@@ -23,11 +22,11 @@
             <td><%= row.sender_name %></td>
             <td><%= row.recipient_name %></td>
             <td><%= row.sent_at %></td>
-            <td><%= row.received_at %></td>
             <td><%= row.status %></td>
             <td><%= row.note %></td>
+            
             <td> | 
-          <a href="/userd/delete/<%= send.id %>">Delete</a>
+          <a href="/userd/delete/<%= row.id %>">Delete</a>
         </td>
 
           </tr>

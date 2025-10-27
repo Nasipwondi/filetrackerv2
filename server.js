@@ -57,6 +57,7 @@ app.use("/directorates", directorateRoutes);
 app.use("/departments", departmentRoutes);
 app.use("/staff", staffRoutes);
 app.use("/userd", sendRoutes);
+app.use('/uploads', express.static('uploads'));
 
 // Authentication Routes
 app.get("/users/register", checkAuthenticated, (req, res) => {

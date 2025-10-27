@@ -18,8 +18,8 @@
     <div class="form-group">
       <label for="sender_id">Sender</label>
       <select name="sender_id" required>
-        <% staff.forEach(staff => { %>
-          <option value="<%= staff.id %>"><%= staff.name %></option>
+        <% users.forEach(user => { %>
+          <option value="<%= user.id %>"><%= user.name %></option>
         <% }) %>
       </select>
     </div>
@@ -30,23 +30,10 @@
     <div class="form-group">
       <label for="recipient_id">Recipient</label>
       <select name="recipient_id" required>
-        <% staff.forEach(staff => { %>
-          <option value="<%= staff.id %>"><%= staff.name %></option>
+        <% users.forEach(user => { %>
+          <option value="<%= user.id %>"><%= user.name %></option>
         <% }) %>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label for="sent_at">Sent At</label>
-      <input type="datetime-local" name="sent_at">
-    </div>
-  </div>
-
-  <!-- Row 3 -->
-  <div class="form-row">
-    <div class="form-group">
-      <label for="received_at">Received At</label>
-      <input type="datetime-local" name="received_at">
     </div>
 
     <div class="form-group">
@@ -54,9 +41,15 @@
       <textarea name="note" rows="4"></textarea>
     </div>
   </div>
+<div class="form-group">
+  <label for="attachment">Attachment (optional):</label>
+  <input type="file" name="attachment" id="attachment" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" />
+ </div>
+
 
   <div class="userd-actions">
   <button type="submit">Send File</button>
   <a href="/userd">Back to Dashboard</a>
 </div>
+</form>
 </section>
