@@ -1,4 +1,3 @@
-/* layout2 */
 * {
   margin: 0;
   padding: 0;
@@ -6,38 +5,43 @@
 }
 
 body {
-  height:100%;
-  width:100%;
-  margin:0;
+  width: 100%;
+  min-height: 100vh; /* full screen minimum height */
+  margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: #edecec;
   color: #333;
+  overflow-y: auto; /* allow scrolling when see more expands */
 }
 
+/* Dashboard container */
 /* Dashboard container */
 .dashboard-container {
   display: flex;
   width: 100%;
-  height: 600px;
+  min-height: 100vh;
   background-color: #ffffff;
-  
+  align-items: flex-start;
 }
 
-/* Sidebar2 container */
+/* Sidebar fixed */
 .sidebar2 {
+  position: fixed; /* ✅ fixed sidebar */
+  top: 0;
+  left: 0;
   width: 250px;
-  height: 800px;
+  height: 100vh;
   background-color: #0f172a;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
 .menu {
   flex-grow: 1;
 }
+
 .menu h3 {
   color: #f8f9f8;
   padding-top: 20px;
@@ -65,9 +69,9 @@ body {
   background-color: #1e293b;
 }
 
-
+/* Logout Section */
 .logout {
-  margin-top: 50px; /* Push this div to the bottom */
+  margin-top: 50px;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
@@ -82,7 +86,7 @@ body {
   display: inline-block;
   padding: 8px 12px;
   margin-bottom: 30px;
-  background-color: #ff4d4f;
+  background-color: #f11010;
   color: white;
   text-decoration: none;
   border-radius: 4px;
@@ -90,17 +94,22 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: #e04345;
+  background-color: #f11010;
 }
 
 /* Main content */
 .main-content {
+  margin-left: 250px; /* ✅ push beside sidebar */
   flex: 1;
-  width: 1200px;
-  height: 800px;
-  padding: 50px;
+  width: calc(100% - 250px);
+  padding: 20px;
   background-color: #96f1a4;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: visible;
 }
+
+/* Container inside main content */
 .container {
   max-width: 1000px;
   margin: 40px auto;
@@ -157,29 +166,52 @@ body {
 }
 
 /* Button styling inside table */
-.container table a {
-  padding: 6px 12px;
-  background-color: #025316;
+.delete-link {
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #f11010;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.container table a:hover {
-  background-color: #025316;
-}
-.container .button-link {
   padding: 6px 12px;
-  background-color: #025316;
-  color: white;
-  border: none;
   border-radius: 4px;
   text-decoration: none;
-  cursor: pointer;
 }
 
-.container .button-link:hover {
+.delete-link:hover {
+  background-color: #d80e0e;
+}
+
+.attachment-link {
+  display: inline-block;
+  min-width: 130px;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #9fa09f;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.attachment-link:hover {
+  background-color: #025316;
+}
+
+/* See more button (aligned left) */
+.see-more-btn {
+  display: inline-block;
+  margin: 20px 0 0 10px;
+  padding: 8px 16px;
+  background-color: #9fa09f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.see-more-btn:hover {
   background-color: #025316;
 }
 
@@ -192,4 +224,8 @@ body {
   .container h2 {
     font-size: 18px;
   }
+}
+
+html, body {
+  height: 100%;
 }

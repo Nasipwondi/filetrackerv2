@@ -3,7 +3,7 @@
    <div class="content">
       <div class="container">
         <h2>File Status</h2>
-      <table>
+      <table id="fileTable">
     <thead>
       <tr>
         <th>File Name</th>
@@ -11,7 +11,9 @@
         <th>Recipient</th>
         <th>Sent At</th>
         <th>Status</th>
-        <th>Comment</th>
+        <th>Attachment</th>   <!-- ✅ Added -->
+        <th>Comment</th>      <!-- ✅ Added -->
+        <th>Action</th>       <!-- ✅ Added -->
       </tr>
     </thead>
     <tbody>
@@ -23,22 +25,61 @@
             <td><%= row.recipient_name %></td>
             <td><%= row.sent_at %></td>
             <td><%= row.status %></td>
+            <td>
+  <% if (row.attachment) { %>
+    <a href="/uploads/<%= row.attachment %>" target="_blank" class="attachment-link">View Attachment</a>
+  <% } else { %>
+    No attachment
+  <% } %>
+</td>
             <td><%= row.note %></td>
             
-            <td> | 
-          <a href="/userd/delete/<%= row.id %>">Delete</a>
+            <td>  
+          <a href="/userd/delete/<%= row.id %>" class="delete-link">Delete</a>
         </td>
 
           </tr>
         <% }) %>
       <% } else { %>
         <tr>
-          <td colspan="6">No files found.</td>
+          <td colspan="8">No files found.</td>
         </tr>
       <% } %>
       
     </tbody>
   </table>
+  <!-- ✅ "See More" button -->
+      <button id="seeMoreBtn" class="see-more-btn">See more</button>
  </div>
   </div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const rows = document.querySelectorAll("#fileTable tbody tr");
+    const seeMoreBtn = document.getElementById("seeMoreBtn");
+
+    const maxVisible = 4; // show only 3 rows initially
+    if (rows.length <= maxVisible) {
+      seeMoreBtn.style.display = "none"; // hide button if not needed
+      return;
+    }
+
+    // hide rows beyond the limit
+    for (let i = maxVisible; i < rows.length; i++) {
+      rows[i].style.display = "none";
+    }
+
+    let expanded = false;
+
+    seeMoreBtn.addEventListener("click", () => {
+      expanded = !expanded;
+
+      for (let i = maxVisible; i < rows.length; i++) {
+        rows[i].style.display = expanded ? "table-row" : "none";
+      }
+
+      seeMoreBtn.textContent = expanded ? "See less" : "See more";
+    });
+  });
+</script>
+
