@@ -4,6 +4,7 @@ const path = require("path");
 const router = express.Router();
 const { pool } = require("../dbConfig");
 const { checkNotAuthenticated } = require("../middleware/auth"); // optional
+const fs = require("fs");
 
 // ✅ Set up Multer *before* the POST route
 const storage = multer.diskStorage({
@@ -92,6 +93,132 @@ router.post("/send", checkNotAuthenticated, upload.single("attachment"), async (
   } catch (err) {
     console.error(err);
     res.status(500).send("Unable to send file");
+  }
+});
+
+router.get("/inbox", checkNotAuthenticated, async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const userId = req.user.id; // using req.user from your session/passport
+    const results = await pool.query(
+      `SELECT 
+          f.name AS file_name,
+          u1.name AS sender_name,
+          s.sent_at,
+          s.attachment,
+          s.status,
+          s.note,
+          s.file_id
+       FROM send s
+       JOIN users u1 ON s.sender_id = u1.id
+       JOIN files f ON s.file_id = f.id
+       WHERE s.recipient_id = $1
+       ORDER BY s.sent_at DESC`,
+      [userId]
+    );
+
+    res.render("userd/inbox", {
+      layout: "layout2",
+      title: "Inbox",
+      css: "/css/inbox.css", // optional
+      receivedFiles: results.rows
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Unable to load inbox");
+  }
+});
+
+router.get("/downloads/:fileId", checkNotAuthenticated, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const userId = req.user.id;
+
+    const result = await pool.query(
+      `SELECT attachment FROM send WHERE file_id = $1 AND recipient_id = $2 LIMIT 1`,
+      [fileId, userId]
+    );
+
+    if (result.rows.length === 0 || !result.rows[0].attachment) {
+      return res.status(404).send("File not found or has no attachment");
+    }
+
+    const filename = result.rows[0].attachment;
+    const filePath = path.join(__dirname, "..", "uploads", filename);
+
+    console.log("Serving file:", filePath);
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).send("File not found on server");
+    }
+
+    res.download(filePath, filename);
+  } catch (err) {
+    console.error("Download error:", err);
+    res.status(500).send("Server error during download");
+  }
+});
+
+router.get("/delete/:fileId", checkNotAuthenticated, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const userId = req.user.id;
+
+    // Delete the record only if it belongs to the logged-in user
+    await pool.query(
+      "DELETE FROM send WHERE file_id = $1 AND recipient_id = $2",
+      [fileId, userId]
+    );
+
+    req.flash("success_msg", "File deleted successfully");
+    res.redirect("/userd/inbox");
+  } catch (err) {
+    console.error("Error deleting file:", err);
+    res.status(500).send("Failed to delete file");
+  }
+});
+
+// GET: View file details
+router.get("/view/:fileId", checkNotAuthenticated, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const userId = req.user.id;
+
+    // Get file details including sender info and file info
+    const result = await pool.query(
+      `SELECT 
+        f.name AS file_name,
+        f.description,
+        f.created_at,
+        u1.name AS sender_name,
+        s.sent_at,
+        s.status,
+        s.note,
+        s.attachment
+      FROM send s
+      JOIN files f ON s.file_id = f.id
+      JOIN users u1 ON s.sender_id = u1.id
+      WHERE s.file_id = $1 AND s.recipient_id = $2
+      LIMIT 1`,
+      [fileId, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("File not found");
+    }
+
+    const fileDetails = result.rows[0];
+    
+    // Create a new view template for displaying file details
+    res.render("userd/view", {
+      layout: "layout2",
+      title: "View Document",
+      css: "/css/inbox.css",
+      file: fileDetails
+    });
+  } catch (err) {
+    console.error("Error viewing file:", err);
+    res.status(500).send("Failed to view file details");
   }
 });
 

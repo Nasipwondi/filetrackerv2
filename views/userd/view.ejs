@@ -1,0 +1,128 @@
+<section>
+  <div class="content">
+    <div class="container">
+      <h1>Document Details</h1>
+      <div class="document-details">
+        <div class="detail-row">
+          <label>File Name:</label>
+          <span><%= file.file_name %></span>
+        </div>
+        
+        <% if (file.description) { %>
+        <div class="detail-row">
+          <label>Description:</label>
+          <span><%= file.description %></span>
+        </div>
+        <% } %>
+        
+        <div class="detail-row">
+          <label>Sent By:</label>
+          <span><%= file.sender_name %></span>
+        </div>
+        
+        <div class="detail-row">
+          <label>Sent Date:</label>
+          <span><%= new Date(file.sent_at).toLocaleString() %></span>
+        </div>
+        
+        <div class="detail-row">
+          <label>Status:</label>
+          <span><%= file.status %></span>
+        </div>
+        
+        <% if (file.note) { %>
+        <div class="detail-row">
+          <label>Note:</label>
+          <span><%= file.note %></span>
+        </div>
+        <% } %>
+        
+        <% if (file.attachment) { %>
+        <div class="detail-row">
+          <label>Attachment:</label>
+          <span>
+            <a href="/uploads/<%= file.attachment %>" target="_blank" class="attachment-link">View Attachment</a>
+          </span>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="action-buttons">
+        <% if (file.attachment) { %>
+        <a href="/userd/downloads/<%= file.file_id %>" class="btn download-btn">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <% } %>
+        <a href="/userd/inbox" class="btn back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Inbox
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.document-details {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.detail-row {
+  display: flex;
+  margin: 15px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.detail-row label {
+  font-weight: bold;
+  width: 150px;
+  color: #333;
+}
+
+.detail-row span {
+  flex: 1;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.download-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.back-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.attachment-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.attachment-link:hover {
+  text-decoration: underline;
+}
+</style>
