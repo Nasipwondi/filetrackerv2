@@ -37,6 +37,12 @@ body {
 .menu {
   flex-grow: 1;
 }
+.menu h3 a {
+  color: #f8f9f8;
+  padding-bottom: 20px;
+  text-decoration: none;
+  
+}
 
 .menu-item {
   display: flex;

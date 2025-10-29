@@ -1,0 +1,83 @@
+<section>
+  <div class="content">
+    <div class="container">
+      <div class="userd">
+        <h1>Send File</h1>
+        <br />
+
+        <form action="/filest/send" method="POST" enctype="multipart/form-data" class="form-grid">
+
+          <!-- Row 1 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="file_id">File</label>
+              <select name="file_id">
+                <option value="">-- Select File --</option>
+                <% if (files && files.length > 0) { %>
+                  <% files.forEach(file => { %>
+                    <option value="<%= file.file_id %>"><%= file.name %> 
+                    <% if (file.owner_name) { %>(Owner: <%= file.owner_name %>)<% } %></option>
+                  <% }) %>
+                <% } else { %>
+                  <option disabled>No files available</option>
+                <% } %>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="recipient_id">Recipient</label>
+              <select name="recipient_id" required>
+                <option value="">-- Select Recipient --</option>
+                <% if (users && users.length > 0) { %>
+                  <% users.forEach(user => { %>
+                    <option value="<%= user.user_id %>"><%= user.name %></option>
+                  <% }) %>
+                <% } else { %>
+                  <option disabled>No users found</option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="note">Comment</label>
+              <textarea name="note" rows="4" placeholder="Enter your comment..."></textarea>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="attachment">Attachment (optional)</label>
+              <input type="file" name="attachment" id="attachment"
+                     accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" />
+            </div>
+
+            <div class="form-group">
+              <label for="repository_file">Select from Repository</label>
+              <select name="repository_file" id="repository_file">
+                <option value="">-- Select from repository --</option>
+                <% if (repositoryFiles && repositoryFiles.length > 0) { %>
+                  <% repositoryFiles.forEach(file => { %>
+                    <option value="<%= file.file_path %>"><%= file.file_name %></option>
+                  <% }) %>
+                <% } else { %>
+                  <option disabled>No repository files found</option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 4: Buttons -->
+          <div class="userd-actions">
+            <button type="submit">Send File</button>
+            <a href="/dash">Back to Dashboard</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

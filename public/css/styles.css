@@ -41,6 +41,13 @@ body {
   flex-grow: 1;
 }
 
+.menu h3 a {
+  color: #f8f9f8;
+  padding-bottom: 20px;
+  text-decoration: none;
+  
+}
+
 .menu-item {
   display: flex;
   align-items: center;
@@ -56,6 +63,14 @@ body {
 .menu-item .icon {
   margin-right: 12px;
   font-size: 18px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item .icon i {
+  font-size: 18px;
+  color: inherit;
 }
 
 .menu-item:hover {
@@ -66,6 +81,10 @@ body {
   background-color: #1e293b;
   color: white;
   font-weight: 600;
+}
+
+.menu-item.active h3 {
+  color: white;
 }
 
 .badge {

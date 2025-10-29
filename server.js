@@ -9,7 +9,7 @@ const app = express();
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 const { checkAuthenticated, checkNotAuthenticated } = require("./middleware/auth");
-const sendRoutes = require("./routes/userd");
+const filestRoutes = require("./routes/filest");
 
 const PORT = process.env.PORT || 4000;
 const initializePassport = require("./passportConfig");
@@ -20,7 +20,6 @@ const fileRoutes = require("./routes/files");
 const directorateRoutes = require("./routes/directorates");
 const departmentRoutes = require("./routes/departments");
 const staffRoutes = require("./routes/staff");
-const userdRoutes = require("./routes/userd");
 
 // View Engine
 app.set("view engine", "ejs");
@@ -50,13 +49,14 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => res.render("index"));
+app.get("/dash", (req, res) => res.render("dash", { layout: "layout2" }));
 
 
 app.use("/files", fileRoutes);
 app.use("/directorates", directorateRoutes);
 app.use("/departments", departmentRoutes);
 app.use("/staff", staffRoutes);
-app.use("/userd", sendRoutes);
+app.use("/filest", filestRoutes);
 app.use('/uploads', express.static('uploads'));
 
 // Authentication Routes
@@ -74,6 +74,7 @@ app.get("/users/login", checkAuthenticated, (req, res) => {
   });
 });
 
+
 app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
   res.render("dashboard", { user: req.user });
 });
@@ -82,23 +83,23 @@ app.get("/users/admin", checkNotAuthenticated, (req, res) => {
   res.render("admin", { user: req.user });
 });
 
-app.get("/users/user", checkNotAuthenticated, async (req, res) => {
+app.get("/filest", checkNotAuthenticated, async (req, res) => {
   try {
     const { rows } = await pool.query(
       "SELECT * FROM send WHERE id = $1",
       [req.user.id] // Adjust this depending on your schema
     );
 
-    res.render("userd", {
+    res.render("filest", {
        layout: "layout2",
-      title: "User Dashboard",
+      title: "File Status",
       css: "/css/userd.css",
       user: req.user,
       send: rows // <- This is what your EJS expects
     });
   } catch (err) {
     console.error(err);
-    res.render("userd", {
+    res.render("filest", {
       user: req.user,
       send: [],
       error: "Failed to load files"
@@ -172,7 +173,7 @@ app.post("/users/login", (req, res, next) => {
       } else if (role === 'admin') {
         return res.redirect("/users/admin");
       } else {
-        return res.redirect("/userd");
+        return res.redirect("/dash");
       }
     });
   })(req, res, next);
@@ -181,4 +182,3 @@ app.post("/users/login", (req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-

@@ -17,7 +17,7 @@ router.get("/", checkNotAuthenticated, (req, res) => {
 // Add new file form
 router.get("/add", checkNotAuthenticated, (req, res) => {
   res.render("files/add", {
-    layout: "layout",
+    layout: "layout2",
     title: "Add New File",
     css: "/css/filesadd.css",
   });

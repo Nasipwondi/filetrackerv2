@@ -24,7 +24,7 @@ body {
 }
 
 /* Sidebar container */
-.sidebar {
+.sidebar, .sidebar2 {
   width: 250px;
   height: 600px;
   background-color: #0f172a;

@@ -11,9 +11,7 @@
         <th>Recipient</th>
         <th>Sent At</th>
         <th>Status</th>
-        <th>Attachment</th>   <!-- ✅ Added -->
-        <th>Comment</th>      <!-- ✅ Added -->
-        <th>Action</th>       <!-- ✅ Added -->
+  <th>Comment</th>      <!-- ✅ Added -->
       </tr>
     </thead>
     <tbody>
@@ -25,24 +23,13 @@
             <td><%= row.recipient_name %></td>
             <td><%= row.sent_at %></td>
             <td><%= row.status %></td>
-            <td>
-  <% if (row.attachment) { %>
-    <a href="/uploads/<%= row.attachment %>" target="_blank" class="attachment-link">View Attachment</a>
-  <% } else { %>
-    No attachment
-  <% } %>
-</td>
             <td><%= row.note %></td>
-            
-            <td>  
-          <a href="/userd/delete/<%= row.id %>" class="delete-link">Delete</a>
-        </td>
 
           </tr>
         <% }) %>
       <% } else { %>
         <tr>
-          <td colspan="8">No files found.</td>
+          <td colspan="6">No files found.</td>
         </tr>
       <% } %>
       
